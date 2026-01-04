@@ -1,0 +1,34 @@
+import { Fragment } from "react/jsx-runtime";
+import { Navbar } from "../../components/Navbar";
+import { SideBar } from "../../components/Sidebar";
+import { useNotes } from "../../context/notes-context";
+import { NotesCard } from "../../components/NotesCard";
+
+export const Important = () => {
+  const { notes } = useNotes();
+
+  const important = notes.filter((note) => note.isPinned);
+
+  return (
+    <Fragment>
+      <Navbar />
+      <main className="flex gap-3">
+        <SideBar />
+        <div>
+          <div className="flex flex-wrap gap-6 flex-1 mt-7">
+            {notes?.length > 0 &&
+              important.map(({ id, title, text, isPinned }) => (
+                <NotesCard
+                  key={id}
+                  id={id}
+                  title={title}
+                  text={text}
+                  isPinned={isPinned}
+                />
+              ))}
+          </div>
+        </div>
+      </main>
+    </Fragment>
+  );
+};
