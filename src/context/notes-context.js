@@ -3,25 +3,28 @@ import { notesReducer } from "../reducers/notesReducer";
 
 const NotesContext = createContext();
 
-const NotesProvider = ({children}) => {
-        const initialState = {
-        title: '',
-        text: '',
-        notes: [],
-        pinnedNotes: [],
-        unpinnedNotes: []
-    }
+const NotesProvider = ({ children }) => {
+  const initialState = {
+    title: "",
+    text: "",
+    notes: [],
+    archive: [],
+  };
 
-    const [{title, text, notes}, notesDispatch] = useReducer(notesReducer, initialState);
+  const [{ title, text, notes, archive }, notesDispatch] = useReducer(
+    notesReducer,
+    initialState
+  );
 
-
-    return (
-        <NotesContext.Provider value={{title, text, notes, notesDispatch}}>
-            {children}
-        </NotesContext.Provider>
-    )
-}
+  return (
+    <NotesContext.Provider
+      value={{ title, text, notes, archive, notesDispatch }}
+    >
+      {children}
+    </NotesContext.Provider>
+  );
+};
 
 const useNotes = () => useContext(NotesContext);
 
-export {NotesProvider, useNotes};
+export { NotesProvider, useNotes };

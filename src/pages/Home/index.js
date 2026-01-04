@@ -5,7 +5,7 @@ import { NotesCard } from "../../components/NotesCard";
 import { useNotes } from "../../context/notes-context";
 
 export const Home = () => {
-  const { title, text, notes, notesDispatch } = useNotes();
+  const { title, text, notes, archive, notesDispatch } = useNotes();
 
   const onTitleChange = (e) => {
     notesDispatch({
@@ -34,6 +34,8 @@ export const Home = () => {
     notes?.length > 0 && notes.filter(({ isPinned }) => isPinned);
   const otherNotes =
     notes?.length > 0 && notes.filter(({ isPinned }) => !isPinned);
+
+  console.log(archive);
 
   return (
     <Fragment>
