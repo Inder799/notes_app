@@ -12,19 +12,19 @@ export const SideBar = () => {
   return (
     <aside className="flex flex-col gap-3 border-r-2 border-gray-100 w-[150px] h-screen p-3">
       <NavLink className={getStyles} to="/">
-        <span class="material-symbols-outlined">home</span>
+        <span class="material-icons-outlined">home</span>
         <span>Home</span>
       </NavLink>
       <NavLink className={getStyles} to="/archive">
-        <span class="material-symbols-outlined">archive</span>
+        <span class="material-icons-outlined">archive</span>
         <span>Archive</span>
       </NavLink>
       <NavLink className={getStyles} to="/important">
-        <span class="material-symbols-outlined">label_important</span>
+        <span class="material-icons-outlined">label_important</span>
         <span>Important</span>
       </NavLink>
       <NavLink className={getStyles} to="/bin">
-        <span class="material-symbols-outlined">delete</span>
+        <span class="material-icons-outlined">delete</span>
         <span>Bin</span>
       </NavLink>
     </aside>
