@@ -1,10 +1,13 @@
 import { useNotes } from "../../context/notes-context";
 import { findNotesInArchive } from "../../utils/findNotesInArchive";
+import { findNotesInBin } from "../../utils/findNotesInBin";
 
 export const NotesCard = ({ id, title, text, isPinned }) => {
-  const { archive, notesDispatch } = useNotes();
+  const { archive, bin, notesDispatch } = useNotes();
 
   const isNotesInArchive = findNotesInArchive(archive, id);
+
+  const isNotesInBin = findNotesInBin(bin, id);
 
   const onPinClick = (id) => {
     notesDispatch({
@@ -25,6 +28,20 @@ export const NotesCard = ({ id, title, text, isPinned }) => {
         });
   };
 
+  const onDeleteClick = (id) => {
+    !isNotesInBin
+      ? notesDispatch({
+          type: "ADD_TO_BIN",
+          payload: { id },
+        })
+      : notesDispatch({
+          type: "REMOVE_FROM_BIN",
+          payload: { id },
+        });
+  };
+
+  console.log(bin);
+
   return (
     <div
       key={id}
@@ -32,7 +49,7 @@ export const NotesCard = ({ id, title, text, isPinned }) => {
     >
       <div className="flex justify-between border-b-2">
         <p>{title}</p>
-        {!isNotesInArchive ? (
+        {!isNotesInArchive && !isNotesInBin ? (
           <button onClick={() => onPinClick(id)}>
             <span
               className={`${
@@ -46,20 +63,34 @@ export const NotesCard = ({ id, title, text, isPinned }) => {
           <></>
         )}
       </div>
+
       <div className="flex flex-col">
         <p>{text}</p>
         <div className="ml-auto">
-          <button onClick={() => onArchiveClick(id)}>
+          {!isNotesInBin ? (
+            <button onClick={() => onArchiveClick(id)}>
+              <span
+                className={
+                  isNotesInArchive
+                    ? "material-icons"
+                    : "material-icons-outlined"
+                }
+              >
+                archive
+              </span>
+            </button>
+          ) : (
+            <></>
+          )}
+
+          <button onClick={() => onDeleteClick(id)}>
             <span
               className={
-                isNotesInArchive ? "material-icons" : "material-icons-outlined"
+                isNotesInBin ? "material-icons" : "material-icons-outlined"
               }
             >
-              archive
+              delete
             </span>
-          </button>
-          <button>
-            <span className="material-icons-outlined">delete</span>
           </button>
         </div>
       </div>
